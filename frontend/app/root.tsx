@@ -10,6 +10,7 @@ import { useEffect } from "react";
 
 import type { Route } from "./+types/root";
 import { ThemeManager } from "./utils/theme";
+import { Navbar } from "./components/Navbar";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -49,7 +50,14 @@ export default function App() {
     ThemeManager.initializeTheme();
   }, []);
 
-  return <Outlet />;
+  return (
+    <div className="flex h-screen bg-brand-neutral-50">
+      <Navbar />
+      <main className="flex-1 lg:ml-0 pt-16 lg:pt-0 overflow-auto">
+        <Outlet />
+      </main>
+    </div>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

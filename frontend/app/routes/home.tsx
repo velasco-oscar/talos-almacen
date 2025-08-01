@@ -78,14 +78,11 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-brand-neutral-50 theme-transition">
       <div className="container mx-auto px-4 py-8">
-        {/* Header con selector de temas */}
+        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
           <h1 className="text-3xl font-bold text-brand-neutral-800 mb-4 sm:mb-0">
-            Talos Almacén - Dashboard
-          </h1>
-          <div className="w-full sm:w-auto sm:max-w-xs">
-            <ThemeSelector />
-          </div>
+            Dashboard
+          </h1>          
         </div>
 
         {/* Cards de estadísticas */}
