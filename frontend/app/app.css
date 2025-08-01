@@ -3,13 +3,311 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  /* === SISTEMA DE TEMAS PERSONALIZABLES === */
+  
+  /* Colores Brand Principales */
+  --color-brand-primary-50: rgb(var(--brand-primary-50));
+  --color-brand-primary-100: rgb(var(--brand-primary-100));
+  --color-brand-primary-200: rgb(var(--brand-primary-200));
+  --color-brand-primary-300: rgb(var(--brand-primary-300));
+  --color-brand-primary-400: rgb(var(--brand-primary-400));
+  --color-brand-primary-500: rgb(var(--brand-primary-500));
+  --color-brand-primary-600: rgb(var(--brand-primary-600));
+  --color-brand-primary-700: rgb(var(--brand-primary-700));
+  --color-brand-primary-800: rgb(var(--brand-primary-800));
+  --color-brand-primary-900: rgb(var(--brand-primary-900));
+  --color-brand-primary-950: rgb(var(--brand-primary-950));
+
+  /* Colores Brand Secundarios */
+  --color-brand-secondary-50: rgb(var(--brand-secondary-50));
+  --color-brand-secondary-100: rgb(var(--brand-secondary-100));
+  --color-brand-secondary-200: rgb(var(--brand-secondary-200));
+  --color-brand-secondary-300: rgb(var(--brand-secondary-300));
+  --color-brand-secondary-400: rgb(var(--brand-secondary-400));
+  --color-brand-secondary-500: rgb(var(--brand-secondary-500));
+  --color-brand-secondary-600: rgb(var(--brand-secondary-600));
+  --color-brand-secondary-700: rgb(var(--brand-secondary-700));
+  --color-brand-secondary-800: rgb(var(--brand-secondary-800));
+  --color-brand-secondary-900: rgb(var(--brand-secondary-900));
+  --color-brand-secondary-950: rgb(var(--brand-secondary-950));
+
+  /* Colores Brand Accent */
+  --color-brand-accent-50: rgb(var(--brand-accent-50));
+  --color-brand-accent-100: rgb(var(--brand-accent-100));
+  --color-brand-accent-200: rgb(var(--brand-accent-200));
+  --color-brand-accent-300: rgb(var(--brand-accent-300));
+  --color-brand-accent-400: rgb(var(--brand-accent-400));
+  --color-brand-accent-500: rgb(var(--brand-accent-500));
+  --color-brand-accent-600: rgb(var(--brand-accent-600));
+  --color-brand-accent-700: rgb(var(--brand-accent-700));
+  --color-brand-accent-800: rgb(var(--brand-accent-800));
+  --color-brand-accent-900: rgb(var(--brand-accent-900));
+  --color-brand-accent-950: rgb(var(--brand-accent-950));
+
+  /* Estados del Sistema */
+  --color-brand-success-50: rgb(var(--brand-success-50));
+  --color-brand-success-100: rgb(var(--brand-success-100));
+  --color-brand-success-200: rgb(var(--brand-success-200));
+  --color-brand-success-300: rgb(var(--brand-success-300));
+  --color-brand-success-400: rgb(var(--brand-success-400));
+  --color-brand-success-500: rgb(var(--brand-success-500));
+  --color-brand-success-600: rgb(var(--brand-success-600));
+  --color-brand-success-700: rgb(var(--brand-success-700));
+  --color-brand-success-800: rgb(var(--brand-success-800));
+  --color-brand-success-900: rgb(var(--brand-success-900));
+  --color-brand-success-950: rgb(var(--brand-success-950));
+
+  --color-brand-warning-50: rgb(var(--brand-warning-50));
+  --color-brand-warning-100: rgb(var(--brand-warning-100));
+  --color-brand-warning-200: rgb(var(--brand-warning-200));
+  --color-brand-warning-300: rgb(var(--brand-warning-300));
+  --color-brand-warning-400: rgb(var(--brand-warning-400));
+  --color-brand-warning-500: rgb(var(--brand-warning-500));
+  --color-brand-warning-600: rgb(var(--brand-warning-600));
+  --color-brand-warning-700: rgb(var(--brand-warning-700));
+  --color-brand-warning-800: rgb(var(--brand-warning-800));
+  --color-brand-warning-900: rgb(var(--brand-warning-900));
+  --color-brand-warning-950: rgb(var(--brand-warning-950));
+
+  --color-brand-error-50: rgb(var(--brand-error-50));
+  --color-brand-error-100: rgb(var(--brand-error-100));
+  --color-brand-error-200: rgb(var(--brand-error-200));
+  --color-brand-error-300: rgb(var(--brand-error-300));
+  --color-brand-error-400: rgb(var(--brand-error-400));
+  --color-brand-error-500: rgb(var(--brand-error-500));
+  --color-brand-error-600: rgb(var(--brand-error-600));
+  --color-brand-error-700: rgb(var(--brand-error-700));
+  --color-brand-error-800: rgb(var(--brand-error-800));
+  --color-brand-error-900: rgb(var(--brand-error-900));
+  --color-brand-error-950: rgb(var(--brand-error-950));
+
+  /* Neutros Personalizables */
+  --color-brand-neutral-50: rgb(var(--brand-neutral-50));
+  --color-brand-neutral-100: rgb(var(--brand-neutral-100));
+  --color-brand-neutral-200: rgb(var(--brand-neutral-200));
+  --color-brand-neutral-300: rgb(var(--brand-neutral-300));
+  --color-brand-neutral-400: rgb(var(--brand-neutral-400));
+  --color-brand-neutral-500: rgb(var(--brand-neutral-500));
+  --color-brand-neutral-600: rgb(var(--brand-neutral-600));
+  --color-brand-neutral-700: rgb(var(--brand-neutral-700));
+  --color-brand-neutral-800: rgb(var(--brand-neutral-800));
+  --color-brand-neutral-900: rgb(var(--brand-neutral-900));
+  --color-brand-neutral-950: rgb(var(--brand-neutral-950));
 }
 
+/* === TEMAS DE CLIENTES === */
+
+/* TEMA POR DEFECTO - Talos (Azul) */
+:root {
+  /* Primary - Azul */
+  --brand-primary-50: 239 246 255;
+  --brand-primary-100: 219 234 254;
+  --brand-primary-200: 191 219 254;
+  --brand-primary-300: 147 197 253;
+  --brand-primary-400: 96 165 250;
+  --brand-primary-500: 59 130 246;
+  --brand-primary-600: 37 99 235;
+  --brand-primary-700: 29 78 216;
+  --brand-primary-800: 30 64 175;
+  --brand-primary-900: 30 58 138;
+  --brand-primary-950: 23 37 84;
+
+  /* Secondary - Indigo */
+  --brand-secondary-50: 238 242 255;
+  --brand-secondary-100: 224 231 255;
+  --brand-secondary-200: 199 210 254;
+  --brand-secondary-300: 165 180 252;
+  --brand-secondary-400: 129 140 248;
+  --brand-secondary-500: 99 102 241;
+  --brand-secondary-600: 79 70 229;
+  --brand-secondary-700: 67 56 202;
+  --brand-secondary-800: 55 48 163;
+  --brand-secondary-900: 49 46 129;
+  --brand-secondary-950: 30 27 75;
+
+  /* Accent - Purple */
+  --brand-accent-50: 250 245 255;
+  --brand-accent-100: 243 232 255;
+  --brand-accent-200: 233 213 255;
+  --brand-accent-300: 196 181 253;
+  --brand-accent-400: 168 85 247;
+  --brand-accent-500: 147 51 234;
+  --brand-accent-600: 126 34 206;
+  --brand-accent-700: 107 33 168;
+  --brand-accent-800: 88 28 135;
+  --brand-accent-900: 74 29 114;
+  --brand-accent-950: 49 10 101;
+
+  /* Success - Green */
+  --brand-success-50: 240 253 244;
+  --brand-success-100: 220 252 231;
+  --brand-success-200: 187 247 208;
+  --brand-success-300: 134 239 172;
+  --brand-success-400: 74 222 128;
+  --brand-success-500: 34 197 94;
+  --brand-success-600: 22 163 74;
+  --brand-success-700: 21 128 61;
+  --brand-success-800: 22 101 52;
+  --brand-success-900: 20 83 45;
+  --brand-success-950: 5 46 22;
+
+  /* Warning - Amber */
+  --brand-warning-50: 255 251 235;
+  --brand-warning-100: 254 243 199;
+  --brand-warning-200: 253 230 138;
+  --brand-warning-300: 252 211 77;
+  --brand-warning-400: 251 191 36;
+  --brand-warning-500: 245 158 11;
+  --brand-warning-600: 217 119 6;
+  --brand-warning-700: 180 83 9;
+  --brand-warning-800: 146 64 14;
+  --brand-warning-900: 120 53 15;
+  --brand-warning-950: 69 26 3;
+
+  /* Error - Red */
+  --brand-error-50: 254 242 242;
+  --brand-error-100: 254 226 226;
+  --brand-error-200: 254 202 202;
+  --brand-error-300: 252 165 165;
+  --brand-error-400: 248 113 113;
+  --brand-error-500: 239 68 68;
+  --brand-error-600: 220 38 38;
+  --brand-error-700: 185 28 28;
+  --brand-error-800: 153 27 27;
+  --brand-error-900: 127 29 29;
+  --brand-error-950: 69 10 10;
+
+  /* Neutral - Slate */
+  --brand-neutral-50: 248 250 252;
+  --brand-neutral-100: 241 245 249;
+  --brand-neutral-200: 226 232 240;
+  --brand-neutral-300: 203 213 225;
+  --brand-neutral-400: 148 163 184;
+  --brand-neutral-500: 100 116 139;
+  --brand-neutral-600: 71 85 105;
+  --brand-neutral-700: 51 65 85;
+  --brand-neutral-800: 30 41 59;
+  --brand-neutral-900: 15 23 42;
+  --brand-neutral-950: 2 6 23;
+}
+
+/* TEMA CLIENTE EJEMPLO - Verde Corporativo */
+[data-theme="corporate-green"] {
+  /* Primary - Verde */
+  --brand-primary-50: 236 253 245;
+  --brand-primary-100: 209 250 229;
+  --brand-primary-200: 167 243 208;
+  --brand-primary-300: 110 231 183;
+  --brand-primary-400: 52 211 153;
+  --brand-primary-500: 16 185 129;
+  --brand-primary-600: 5 150 105;
+  --brand-primary-700: 4 120 87;
+  --brand-primary-800: 6 95 70;
+  --brand-primary-900: 6 78 59;
+  --brand-primary-950: 2 44 34;
+
+  /* Secondary - Teal */
+  --brand-secondary-50: 240 253 250;
+  --brand-secondary-100: 204 251 241;
+  --brand-secondary-200: 153 246 228;
+  --brand-secondary-300: 94 234 212;
+  --brand-secondary-400: 45 212 191;
+  --brand-secondary-500: 20 184 166;
+  --brand-secondary-600: 13 148 136;
+  --brand-secondary-700: 15 118 110;
+  --brand-secondary-800: 17 94 89;
+  --brand-secondary-900: 19 78 74;
+  --brand-secondary-950: 4 47 46;
+
+  /* Accent - Lime */
+  --brand-accent-50: 247 254 231;
+  --brand-accent-100: 236 252 203;
+  --brand-accent-200: 217 249 157;
+  --brand-accent-300: 190 242 100;
+  --brand-accent-400: 163 230 53;
+  --brand-accent-500: 132 204 22;
+  --brand-accent-600: 101 163 13;
+  --brand-accent-700: 77 124 15;
+  --brand-accent-800: 63 98 18;
+  --brand-accent-900: 54 83 20;
+  --brand-accent-950: 26 46 5;
+
+  /* Los estados y neutrales se mantienen igual */
+}
+
+/* TEMA CLIENTE EJEMPLO - Naranja Tech */
+[data-theme="tech-orange"] {
+  /* Primary - Naranja */
+  --brand-primary-50: 255 247 237;
+  --brand-primary-100: 255 237 213;
+  --brand-primary-200: 254 215 170;
+  --brand-primary-300: 253 186 116;
+  --brand-primary-400: 251 146 60;
+  --brand-primary-500: 249 115 22;
+  --brand-primary-600: 234 88 12;
+  --brand-primary-700: 194 65 12;
+  --brand-primary-800: 154 52 18;
+  --brand-primary-900: 124 45 18;
+  --brand-primary-950: 67 20 7;
+
+  /* Secondary - Amber */
+  --brand-secondary-50: 255 251 235;
+  --brand-secondary-100: 254 243 199;
+  --brand-secondary-200: 253 230 138;
+  --brand-secondary-300: 252 211 77;
+  --brand-secondary-400: 251 191 36;
+  --brand-secondary-500: 245 158 11;
+  --brand-secondary-600: 217 119 6;
+  --brand-secondary-700: 180 83 9;
+  --brand-secondary-800: 146 64 14;
+  --brand-secondary-900: 120 53 15;
+  --brand-secondary-950: 69 26 3;
+
+  /* Accent - Red */
+  --brand-accent-50: 254 242 242;
+  --brand-accent-100: 254 226 226;
+  --brand-accent-200: 254 202 202;
+  --brand-accent-300: 252 165 165;
+  --brand-accent-400: 248 113 113;
+  --brand-accent-500: 239 68 68;
+  --brand-accent-600: 220 38 38;
+  --brand-accent-700: 185 28 28;
+  --brand-accent-800: 153 27 27;
+  --brand-accent-900: 127 29 29;
+  --brand-accent-950: 69 10 10;
+}
+
+/* === APLICACIÓN BASE === */
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white dark:bg-brand-neutral-950;
+  @apply text-brand-neutral-900 dark:text-brand-neutral-100;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+}
+
+/* === UTILIDADES PERSONALIZADAS === */
+.theme-transition {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Clases auxiliares para demostración */
+.demo-card {
+  @apply bg-brand-primary-50 border border-brand-primary-200 rounded-lg p-4;
+  @apply hover:bg-brand-primary-100 transition-colors;
+}
+
+.demo-button-primary {
+  @apply bg-brand-primary-500 hover:bg-brand-primary-600 text-white;
+  @apply px-4 py-2 rounded-md font-medium transition-colors;
+  @apply focus:outline-none focus:ring-2 focus:ring-brand-primary-500 focus:ring-offset-2;
+}
+
+.demo-button-secondary {
+  @apply bg-brand-secondary-500 hover:bg-brand-secondary-600 text-white;
+  @apply px-4 py-2 rounded-md font-medium transition-colors;
+  @apply focus:outline-none focus:ring-2 focus:ring-brand-secondary-500 focus:ring-offset-2;
 }
