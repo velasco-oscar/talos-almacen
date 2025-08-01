@@ -1,0 +1,105 @@
+# LICENCIA PRIVADA RESTRINGIDA
+**Versión 1.1 – Fecha: 30 de junio de 2025**
+
+Este software, incluyendo su código fuente, documentación, archivos asociados y cualquier derivado (el "Software"), es propiedad exclusiva de Oscar Velasco Cortes y Roberto Carlos Aguero Calleja, Raul Gutierrez Hernandez ("los Autores"). Para consultas, contactar a dev.oscarvelasco@gmail.com, carlos.aguero@uabc.edu.mx y raul.gutierrez19@uabc.edu.mx.
+
+---
+
+## 1. DEFINICIONES
+
+- **"Software":** El código fuente, binarios, documentación y archivos asociados.
+- **"Modificación":** Cualquier alteración, corrección, adición o supresión realizada al Software.
+- **"Usuario":** Cualquier persona física o moral que acceda o reciba el Software directa o indirectamente.
+- **"Autorización":** Permiso por escrito y firmado otorgado por ambos Autores para usar el Software bajo condiciones específicas.
+- **"Tercero":** Cualquier persona, entidad, organización o parte distinta al Usuario y los Autores.
+- **"Obra Derivada":** Cualquier obra basada en el Software, incluyendo modificaciones, traducciones o adaptaciones.
+- **"Divulgación":** Cualquier acción que implique hacer accesible el Software o parte de él a Terceros, por cualquier medio.
+- **"Ingeniería Inversa":** Toda acción destinada a analizar el funcionamiento interno del Software, cualquiera que sea el método empleado.
+
+---
+
+## 2. ACEPTACIÓN DE LA LICENCIA
+
+El acceso, descarga o posesión del Software por parte del Usuario implica la aceptación plena y sin reservas de los términos de esta licencia.
+
+---
+
+## 3. PROHIBICIÓN DE USO NO AUTORIZADO
+
+Queda estrictamente prohibido cualquier uso, reproducción, modificación, distribución, sublicenciamiento, comunicación pública, divulgación o ingeniería inversa del Software, en todo o en parte, sin autorización previa, expresa, por escrito y firmada por ambos Autores.
+
+---
+
+### 3.1 LICENCIA DE USO LIMITADA
+
+Los Autores podrán otorgar una licencia de uso limitada, no exclusiva, no transferible, y revocable, mediante contrato por escrito y firmado, especificando los términos y condiciones particulares aplicables. Dicha licencia no implica cesión de derechos de propiedad intelectual ni de patente.
+
+---
+
+## 4. CONFIDENCIALIDAD
+
+El Usuario se obliga a mantener la confidencialidad del Software y a no divulgarlo, total ni parcialmente, a Terceros, salvo autorización expresa, por escrito y firmada de los Autores.
+
+---
+
+## 5. DERECHOS SOBRE MODIFICACIONES Y CONTRIBUCIONES
+
+Toda Modificación del Software, permitida o no, así como cualquier contribución, mejora o sugerencia realizada por el Usuario, será considerada una Obra Derivada. Los derechos patrimoniales sobre dichas Modificaciones y contribuciones corresponderán exclusivamente a los Autores, salvo pacto en contrario por escrito y firmado.
+
+---
+
+## 6. AUTORIZACIÓN Y REVOCACIÓN
+
+Cualquier autorización otorgada por los Autores podrá establecer condiciones específicas y será siempre revocable, sin necesidad de justificación, mediante notificación escrita (por correo electrónico o carta certificada). Tras la revocación, el Usuario deberá cesar de inmediato cualquier uso y eliminar todas las copias en su poder, certificando por escrito y bajo protesta de decir verdad, dentro de un plazo máximo de 48 horas, la eliminación de todas las copias a los Autores.
+
+---
+
+## 7. EXENCIÓN DE GARANTÍAS Y LIMITACIÓN DE RESPONSABILIDAD
+
+El Software se proporciona "tal cual", sin garantía expresa o implícita. Los Autores no serán responsables por daños directos, indirectos, incidentales, especiales, consecuenciales o de cualquier naturaleza derivados del uso o imposibilidad de uso del Software.
+
+---
+
+## 8. INDEMNIZACIÓN
+
+El Usuario indemnizará y mantendrá indemnes a los Autores frente a cualquier reclamación, daño, pérdida o gasto (incluyendo honorarios legales) derivados de un uso no autorizado o incumplimiento de esta licencia.
+
+---
+
+## 9. AUDITORÍA
+
+Los Autores se reservan el derecho de solicitar evidencia razonable del cumplimiento de los términos de esta licencia. El Usuario se compromete a colaborar, dentro de límites razonables, con dicha verificación, si es solicitada por escrito.
+
+---
+
+## 10. TERMINACIÓN Y SANCIONES
+
+El incumplimiento de cualquier término implicará la terminación automática de los derechos concedidos y la obligación de resarcir los daños y perjuicios ocasionados a los Autores. Tras la terminación, el Usuario se obliga a dejar de utilizar el Software y certificar la eliminación de todas las copias en su poder según lo estipulado en la cláusula 6.
+
+---
+
+## 11. JURISDICCIÓN Y LEY APLICABLE
+
+Esta licencia se regirá e interpretará conforme a las leyes del Estado de Baja California, México. Para cualquier controversia, las partes se someten a la jurisdicción de los tribunales competentes en Mexicali, renunciando a cualquier otro fuero que pudiera corresponderles.
+
+---
+
+## 12. NO RENUNCIA DE DERECHOS
+
+La tolerancia o falta de ejercicio de cualquier derecho contenido en esta licencia no implicará renuncia al mismo.
+
+---
+
+## 13. SEPARABILIDAD
+
+Si alguna disposición de esta licencia se considera inválida o inaplicable, las demás permanecerán en pleno vigor y efecto.
+
+---
+
+## 14. ACTUALIZACIONES Y VERSIONES DE LA LICENCIA
+
+Los Autores podrán modificar esta licencia en cualquier momento. Las nuevas versiones se notificarán por escrito a los Usuarios autorizados y aplicarán a partir de la fecha de notificación, salvo pactos en contrario.
+
+---
+
+**TODOS LOS DERECHOS RESERVADOS.**
