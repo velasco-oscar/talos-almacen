@@ -1,0 +1,38 @@
+{
+  "name": "talos-almacen",
+  "version": "1.0.0",
+  "description": "Talos Almacen",
+  "main": "main/main.js",
+  "scripts": {
+    "electron": "electron .",
+    "electron-dev": "concurrently \"npm run backend-dev\" \"npm run frontend-dev\" \"wait-on http://localhost:3001 && wait-on http://localhost:5173 && electron .\"",
+    "backend-dev": "nodemon backend/server.js",
+    "frontend-dev": "cd frontend && npm run dev",
+    "dev": "npm run electron-dev",
+    "build": "npm run build-frontend",
+    "build-frontend": "cd frontend && npm run build",
+    "dist": "electron-builder",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "node prisma/seed.js",
+    "setup": "npm install && cd frontend && npm install && cd .. && npm run prisma:generate"
+  },
+  "keywords": ["talos-almacen", "electron", "offline"],
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "electron": "^37.2.5",
+    "electron-builder": "^26.0.12",
+    "nodemon": "^3.1.10",
+    "wait-on": "^8.0.4"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.13.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.1",
+    "prisma": "^6.13.0",
+    "sqlite3": "^5.1.7"
+  }
+}

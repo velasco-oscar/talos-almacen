@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Modelo básico para productos
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  sku         String   @unique
+  price       Float
+  cost        Float?
+  stock       Int      @default(0)
+  minStock    Int      @default(0)
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isActive    Boolean  @default(true)
+
+  // Relaciones con movimientos de inventario
+  movements InventoryMovement[]
+
+  @@map("products")
+}
+
+// Modelo para categorías
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+  color       String?   @default("#6B7280")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  isActive    Boolean   @default(true)
+  
+  // Relaciones
+  products    Product[]
+
+  @@map("categories")
+}
+
+// Modelo para movimientos de inventario
+model InventoryMovement {
+  id          String   @id @default(cuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+  type        MovementType
+  quantity    Int
+  reason      String?
+  reference   String?  // Número de factura, orden, etc.
+  notes       String?
+  createdAt   DateTime @default(now())
+  createdBy   String?  // ID del usuario que hizo el movimiento
+
+  @@map("inventory_movements")
+}
+
+// Enum para tipos de movimiento
+enum MovementType {
+  IN          // Entrada
+  OUT         // Salida
+  ADJUSTMENT  // Ajuste
+  TRANSFER    // Transferencia
+
+  @@map("movement_type")
+}
