@@ -46,8 +46,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   useEffect(() => {
-    // Inicializar el sistema de temas al cargar la aplicación
-    ThemeManager.initializeTheme();
+    // Initialize theme only on client-side
+    if (typeof window !== "undefined") {
+      ThemeManager.initializeTheme();
+    }
   }, []);
 
   return (
