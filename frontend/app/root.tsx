@@ -51,9 +51,9 @@ export default function App() {
   }, []);
 
   return (
-    <div className="flex h-screen bg-brand-neutral-50">
+    <div className="relative h-screen bg-brand-neutral-50">
       <Navbar />
-      <main className="flex-1 lg:ml-0 pt-16 lg:pt-0 overflow-auto">
+      <main className="pt-16 h-full overflow-auto">
         <Outlet />
       </main>
     </div>

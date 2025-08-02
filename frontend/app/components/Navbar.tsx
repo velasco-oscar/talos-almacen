@@ -150,11 +150,12 @@ export function Sidebar() {
   // Prevent body scroll when mobile menu is open - fixes layout shift issues
   useEffect(() => {
     if (!isClient) return;
-    
     const body = document.body;
     if (isMobileOpen && isMobile) {
       body.style.overflow = "hidden";
-      body.style.paddingRight = "0px"; // Prevent layout shift from scrollbar
+      // Prevent layout shift by compensating for scrollbar width
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+      body.style.paddingRight = `${scrollBarWidth}px`;
     } else {
       body.style.overflow = "";
       body.style.paddingRight = "";
@@ -218,12 +219,11 @@ export function Sidebar() {
       */}
       <nav
         className={`
-          fixed inset-y-0 left-0 z-50 
+          fixed inset-y-0 left-0 z-50
           bg-white border-r border-gray-200 shadow-lg
           transform transition-transform duration-300 ease-out
           overflow-x-hidden overflow-y-auto
-          ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0 lg:static lg:shadow-none
+          ${isMobileOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
           ${isDesktopExpanded ? "w-72" : "w-16"}
         `}
         role="navigation"
@@ -417,20 +417,6 @@ export function Sidebar() {
           </div>
         </div>
       </nav>
-
-      {/* 
-        MAIN CONTENT SPACER
-        - Provides proper spacing for main content when sidebar is visible
-        - Responsive width matches sidebar width
-        - Prevents content overlap
-      */}
-      <div 
-        className={`
-          hidden lg:block flex-shrink-0 transition-all duration-300
-          ${isDesktopExpanded ? "w-72" : "w-16"}
-        `} 
-        aria-hidden="true"
-      />
     </>
   );
 }

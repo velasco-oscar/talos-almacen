@@ -281,6 +281,9 @@
 /* === APLICACIÓN BASE === */
 html,
 body {
+  /* Always reserve scrollbar gutter to avoid layout shift */
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
   @apply bg-white dark:bg-brand-neutral-950;
   @apply text-brand-neutral-900 dark:text-brand-neutral-100;
 
