@@ -207,7 +207,7 @@ export default function Inventario() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-brand-primary-600"></div>
       </div>
     );
   }
@@ -215,12 +215,12 @@ export default function Inventario() {
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-red-600 text-center">
+        <div className="text-brand-error-600 text-center">
           <h2 className="text-2xl font-bold mb-2">Error</h2>
           <p>{error}</p>
           <button 
             onClick={loadInventario}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="mt-4 px-4 py-2 bg-brand-primary-600 text-white rounded hover:bg-brand-primary-700"
           >
             Reintentar
           </button>
@@ -233,10 +233,10 @@ export default function Inventario() {
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Inventario de Medicamentos</h1>
+        <h1 className="text-3xl font-bold text-brand-neutral-900">Inventario de Medicamentos</h1>
         <button
           onClick={handleCreate}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="bg-brand-primary-600 text-white px-4 py-2 rounded-lg hover:bg-brand-primary-700 focus:outline-none focus:ring-2 focus:ring-brand-primary-500"
         >
           + Nuevo Item
         </button>
@@ -250,14 +250,14 @@ export default function Inventario() {
             placeholder="Buscar por nombre, código de barras o fórmula..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
           />
         </div>
         <div className="flex gap-2">
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as 'nombre' | 'fechaCaducidad' | 'stockActual')}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
           >
             <option value="nombre">Ordenar por Nombre</option>
             <option value="fechaCaducidad">Ordenar por Caducidad</option>
@@ -265,7 +265,7 @@ export default function Inventario() {
           </select>
           <button
             onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
-            className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-3 py-2 border border-brand-neutral-300 rounded-lg hover:bg-brand-neutral-50 focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-700"
           >
             {sortOrder === 'asc' ? '↑' : '↓'}
           </button>
@@ -274,25 +274,25 @@ export default function Inventario() {
 
       {/* Estadísticas rápidas */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white p-4 rounded-lg shadow border">
-          <h3 className="text-sm font-medium text-gray-500">Total Items</h3>
-          <p className="text-2xl font-bold text-gray-900">{inventario.length}</p>
+        <div className="bg-white p-4 rounded-lg shadow border border-brand-neutral-200">
+          <h3 className="text-sm font-medium text-brand-neutral-500">Total Items</h3>
+          <p className="text-2xl font-bold text-brand-neutral-900">{inventario.length}</p>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow border">
-          <h3 className="text-sm font-medium text-gray-500">Stock Bajo (≤10)</h3>
-          <p className="text-2xl font-bold text-yellow-600">
+        <div className="bg-white p-4 rounded-lg shadow border border-brand-neutral-200">
+          <h3 className="text-sm font-medium text-brand-neutral-500">Stock Bajo (≤10)</h3>
+          <p className="text-2xl font-bold text-brand-warning-600">
             {inventario.filter(item => item.stockActual <= 10).length}
           </p>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow border">
-          <h3 className="text-sm font-medium text-gray-500">Sin Stock</h3>
-          <p className="text-2xl font-bold text-red-600">
+        <div className="bg-white p-4 rounded-lg shadow border border-brand-neutral-200">
+          <h3 className="text-sm font-medium text-brand-neutral-500">Sin Stock</h3>
+          <p className="text-2xl font-bold text-brand-error-600">
             {inventario.filter(item => item.stockActual === 0).length}
           </p>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow border">
-          <h3 className="text-sm font-medium text-gray-500">Próximos a Caducar</h3>
-          <p className="text-2xl font-bold text-orange-600">
+        <div className="bg-white p-4 rounded-lg shadow border border-brand-neutral-200">
+          <h3 className="text-sm font-medium text-brand-neutral-500">Próximos a Caducar</h3>
+          <p className="text-2xl font-bold text-brand-accent-600">
             {inventario.filter(item => {
               const diasRestantes = Math.ceil((new Date(item.fechaCaducidad).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
               return diasRestantes <= 30 && diasRestantes >= 0;
@@ -302,47 +302,47 @@ export default function Inventario() {
       </div>
 
       {/* Tabla de inventario */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white rounded-lg shadow overflow-hidden border border-brand-neutral-200">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-brand-neutral-200">
+            <thead className="bg-brand-neutral-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-brand-neutral-500 uppercase tracking-wider">
                   Medicamento
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-brand-neutral-500 uppercase tracking-wider">
                   Código de Barras
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-brand-neutral-500 uppercase tracking-wider">
                   Stock
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-brand-neutral-500 uppercase tracking-wider">
                   Precios
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-brand-neutral-500 uppercase tracking-wider">
                   Caducidad
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-brand-neutral-500 uppercase tracking-wider">
                   Acciones
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-brand-neutral-200">
               {filteredAndSortedInventario.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50">
+                <tr key={item.id} className="hover:bg-brand-neutral-50">
                   <td className="px-6 py-4">
                     <div>
-                      <div className="text-sm font-medium text-gray-900">{item.nombre}</div>
+                      <div className="text-sm font-medium text-brand-neutral-900">{item.nombre}</div>
                       {item.formula && (
-                        <div className="text-sm text-gray-500">{item.formula}</div>
+                        <div className="text-sm text-brand-neutral-500">{item.formula}</div>
                       )}
                       {item.concentracion && (
-                        <div className="text-xs text-gray-400">{item.concentracion}</div>
+                        <div className="text-xs text-brand-neutral-400">{item.concentracion}</div>
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-900">
-                    <code className="bg-gray-100 px-2 py-1 rounded text-xs">
+                  <td className="px-6 py-4 text-sm text-brand-neutral-900">
+                    <code className="bg-brand-neutral-100 px-2 py-1 rounded text-xs">
                       {item.codigoBarras}
                     </code>
                   </td>
@@ -351,7 +351,7 @@ export default function Inventario() {
                       {item.stockActual} unidades
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                  <td className="px-6 py-4 text-sm text-brand-neutral-900">
                     <div>Compra: ${item.precioCompra}</div>
                     <div>Venta: ${item.precioVenta}</div>
                   </td>
@@ -363,13 +363,13 @@ export default function Inventario() {
                   <td className="px-6 py-4 text-sm font-medium space-x-2">
                     <button
                       onClick={() => handleEdit(item)}
-                      className="text-blue-600 hover:text-blue-900"
+                      className="text-brand-primary-600 hover:text-brand-primary-900"
                     >
                       Editar
                     </button>
                     <button
                       onClick={() => handleDelete(item.id)}
-                      className="text-red-600 hover:text-red-900"
+                      className="text-brand-error-600 hover:text-brand-error-900"
                     >
                       Eliminar
                     </button>
@@ -381,7 +381,7 @@ export default function Inventario() {
         </div>
         
         {filteredAndSortedInventario.length === 0 && (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-brand-neutral-500">
             No hay items en el inventario que coincidan con la búsqueda.
           </div>
         )}
@@ -390,15 +390,15 @@ export default function Inventario() {
       {/* Modal para crear/editar */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4">
+          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto modal-content border border-brand-neutral-200">
+            <h2 className="text-xl font-bold mb-4 text-brand-neutral-900">
               {editingItem ? 'Editar Item' : 'Nuevo Item'}
             </h2>
             
             <form onSubmit={handleSave} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
                     Nombre *
                   </label>
                   <input
@@ -407,12 +407,12 @@ export default function Inventario() {
                     value={formData.nombre}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
                     Código de Barras *
                   </label>
                   <input
@@ -421,12 +421,12 @@ export default function Inventario() {
                     value={formData.codigoBarras}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
                     Fecha de Caducidad *
                   </label>
                   <input
@@ -435,12 +435,12 @@ export default function Inventario() {
                     value={formData.fechaCaducidad}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
                     Stock Actual
                   </label>
                   <input
@@ -449,12 +449,12 @@ export default function Inventario() {
                     value={formData.stockActual}
                     onChange={handleInputChange}
                     min="0"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
                     Precio de Compra *
                   </label>
                   <input
@@ -465,12 +465,12 @@ export default function Inventario() {
                     step="0.01"
                     min="0"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
                     Precio de Venta *
                   </label>
                   <input
@@ -481,12 +481,12 @@ export default function Inventario() {
                     step="0.01"
                     min="0"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
                     Fórmula/Composición
                   </label>
                   <input
@@ -494,12 +494,12 @@ export default function Inventario() {
                     name="formula"
                     value={formData.formula}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
                     Concentración
                   </label>
                   <input
@@ -508,12 +508,12 @@ export default function Inventario() {
                     value={formData.concentracion}
                     onChange={handleInputChange}
                     placeholder="ej: 500mg, 250ml"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white placeholder-brand-neutral-500"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
                     Lote
                   </label>
                   <input
@@ -521,12 +521,12 @@ export default function Inventario() {
                     name="lote"
                     value={formData.lote}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
                     Proveedor
                   </label>
                   <input
@@ -534,12 +534,12 @@ export default function Inventario() {
                     name="proveedor"
                     value={formData.proveedor}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
                     Ubicación
                   </label>
                   <input
@@ -548,13 +548,13 @@ export default function Inventario() {
                     value={formData.ubicacion}
                     onChange={handleInputChange}
                     placeholder="ej: Estante A-3"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white placeholder-brand-neutral-500"
                   />
                 </div>
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
                   Observaciones
                 </label>
                 <textarea
@@ -562,7 +562,7 @@ export default function Inventario() {
                   value={formData.observaciones}
                   onChange={handleInputChange}
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
                 />
               </div>
               
@@ -570,13 +570,13 @@ export default function Inventario() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-2 text-brand-neutral-700 border border-brand-neutral-300 rounded-lg hover:bg-brand-neutral-50 focus:outline-none focus:ring-2 focus:ring-brand-primary-500"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-2 bg-brand-primary-600 text-white rounded-lg hover:bg-brand-primary-700 focus:outline-none focus:ring-2 focus:ring-brand-primary-500"
                 >
                   {editingItem ? 'Actualizar' : 'Crear'}
                 </button>

@@ -284,12 +284,36 @@ body {
   /* Always reserve scrollbar gutter to avoid layout shift */
   overflow-y: scroll;
   scrollbar-gutter: stable;
-  @apply bg-white dark:bg-brand-neutral-950;
-  @apply text-brand-neutral-900 dark:text-brand-neutral-100;
+  @apply bg-white;
+  @apply text-brand-neutral-900;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+/* === ESTILOS ESPECÍFICOS PARA FORMULARIOS === */
+/* Asegurar que los inputs, selects y texto de formularios tengan colores correctos */
+input, select, textarea {
+  @apply text-gray-900 bg-white;
+}
+
+input:focus, select:focus, textarea:focus {
+  @apply text-gray-900;
+}
+
+/* Estilos específicos para modales */
+.modal-content input,
+.modal-content select,
+.modal-content textarea,
+.modal-content label {
+  @apply text-gray-900;
+}
+
+.modal-content input::placeholder,
+.modal-content textarea::placeholder {
+  @apply text-gray-500;
+}
+
+/* Asegurar que los selectores tengan texto oscuro */
+select option {
+  @apply text-gray-900 bg-white;
 }
 
 /* === UTILIDADES PERSONALIZADAS === */
