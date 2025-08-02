@@ -58,13 +58,13 @@ app.get('/api/db-test', async (req, res) => {
 
 // Import routes
 const productRoutes = require('./routes/products');
+const inventarioRoutes = require('./routes/inventario');
 // const categoryRoutes = require('./routes/categories');
-// const inventoryRoutes = require('./routes/inventory');
 
 // Use routes
 app.use('/api/products', productRoutes);
+app.use('/api/inventario', inventarioRoutes);
 // app.use('/api/categories', categoryRoutes);
-// app.use('/api/inventory', inventoryRoutes);
 
 // Catch-all route for production
 if (process.env.NODE_ENV === 'production') {
