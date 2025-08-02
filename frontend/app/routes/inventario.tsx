@@ -191,17 +191,17 @@ export default function Inventario() {
 
   // Función para determinar el color del stock
   const getStockColor = (stock: number) => {
-    if (stock === 0) return 'text-red-600 bg-red-50';
-    if (stock <= 10) return 'text-yellow-600 bg-yellow-50';
-    return 'text-green-600 bg-green-50';
+    if (stock === 0) return 'text-brand-error-600 bg-brand-error-50';
+    if (stock <= 10) return 'text-brand-warning-600 bg-brand-warning-50';
+    return 'text-brand-success-600 bg-brand-success-50';
   };
 
   // Función para determinar el color de la fecha de caducidad
   const getCaducidadColor = (fecha: string) => {
     const diasRestantes = Math.ceil((new Date(fecha).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-    if (diasRestantes < 0) return 'text-red-600 bg-red-50'; // Caducado
-    if (diasRestantes <= 30) return 'text-yellow-600 bg-yellow-50'; // Próximo a caducar
-    return 'text-gray-600'; // Normal
+    if (diasRestantes < 0) return 'text-brand-error-600 bg-brand-error-50'; // Caducado
+    if (diasRestantes <= 30) return 'text-brand-warning-600 bg-brand-warning-50'; // Próximo a caducar
+    return 'text-brand-neutral-600'; // Normal
   };
 
   if (loading) {
@@ -389,8 +389,11 @@ export default function Inventario() {
 
       {/* Modal para crear/editar */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto modal-content border border-brand-neutral-200">
+        <div 
+          className="fixed inset-0 flex items-center justify-center z-50"
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
+        >
+          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto modal-content border border-brand-neutral-200 shadow-2xl m-4">
             <h2 className="text-xl font-bold mb-4 text-brand-neutral-900">
               {editingItem ? 'Editar Item' : 'Nuevo Item'}
             </h2>
