@@ -70,21 +70,46 @@ model Inventario {
   id                String    @id @default(cuid())
   nombre            String
   codigoBarras      String    @unique
-  fechaCaducidad    DateTime
+  fechaCaducidad    DateTime  // Fecha de caducidad más próxima (se actualiza automáticamente)
   precioCompra      Float
   precioVenta       Float
   stockActual       Int       @default(0)
   formula           String?   // Fórmula o concentración del medicamento
   concentracion     String?   // Concentración específica (ej: "500mg", "250ml")
-  lote              String?   // Número de lote
+  lote              String?   // Número de lote del último ingreso
   proveedor         String?   // Proveedor del medicamento
   ubicacion         String?   // Ubicación en el almacén
   observaciones     String?   // Observaciones adicionales
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   isActive          Boolean   @default(true)
+  
+  // Relación con lotes
+  lotes             Lote[]
 
   @@map("inventario")
+}
+
+// Modelo para manejo de lotes con diferentes fechas de caducidad
+model Lote {
+  id                String    @id @default(cuid())
+  numeroLote        String
+  fechaCaducidad    DateTime
+  cantidad          Int       @default(0)
+  precioCompra      Float?    // Puede variar por lote
+  proveedor         String?
+  fechaRecepcion    DateTime  @default(now())
+  observaciones     String?
+  
+  // Relación con inventario
+  inventarioId      String
+  inventario        Inventario @relation(fields: [inventarioId], references: [id], onDelete: Cascade)
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  isActive          Boolean   @default(true)
+
+  @@map("lotes")
 }
 
 // Enum para tipos de movimiento

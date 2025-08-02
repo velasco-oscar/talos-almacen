@@ -25,6 +25,22 @@ interface InventarioItem {
   createdAt: string;
   updatedAt: string;
   isActive: boolean;
+  lotes?: Lote[];
+}
+
+interface Lote {
+  id: string;
+  numeroLote: string;
+  fechaCaducidad: string;
+  cantidad: number;
+  precioCompra?: number;
+  proveedor?: string;
+  fechaRecepcion: string;
+  observaciones?: string;
+  inventarioId: string;
+  createdAt: string;
+  updatedAt: string;
+  isActive: boolean;
 }
 
 interface FormData {
@@ -39,6 +55,16 @@ interface FormData {
   lote: string;
   proveedor: string;
   ubicacion: string;
+  observaciones: string;
+}
+
+interface LoteFormData {
+  numeroLote: string;
+  fechaCaducidad: string;
+  cantidad: string;
+  precioCompra: string;
+  proveedor: string;
+  fechaRecepcion: string;
   observaciones: string;
 }
 
@@ -57,16 +83,33 @@ const initialFormData: FormData = {
   observaciones: ''
 };
 
+const initialLoteFormData: LoteFormData = {
+  numeroLote: '',
+  fechaCaducidad: '',
+  cantidad: '',
+  precioCompra: '',
+  proveedor: '',
+  fechaRecepcion: new Date().toISOString().split('T')[0], // Hoy
+  observaciones: ''
+};
+
 export default function Inventario() {
   const [inventario, setInventario] = useState<InventarioItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [showLoteModal, setShowLoteModal] = useState(false);
   const [editingItem, setEditingItem] = useState<InventarioItem | null>(null);
+  const [editingLote, setEditingLote] = useState<Lote | null>(null);
   const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [loteFormData, setLoteFormData] = useState<LoteFormData>(initialLoteFormData);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<'nombre' | 'fechaCaducidad' | 'stockActual'>('nombre');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [selectedItem, setSelectedItem] = useState<InventarioItem | null>(null);
+  const [lotes, setLotes] = useState<Lote[]>([]);
+  const [lotesLoading, setLotesLoading] = useState(false);
+  const [viewingLotes, setViewingLotes] = useState(false);
 
   // Cargar inventario
   const loadInventario = async () => {
@@ -87,10 +130,31 @@ export default function Inventario() {
     loadInventario();
   }, []);
 
+  // Cargar lotes de un producto
+  const loadLotes = async (inventarioId: string) => {
+    try {
+      setLotesLoading(true);
+      const response = await fetch(`/api/inventario/${inventarioId}/lotes`);
+      if (!response.ok) throw new Error('Error al cargar lotes');
+      const data = await response.json();
+      setLotes(data);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Error al cargar lotes');
+    } finally {
+      setLotesLoading(false);
+    }
+  };
+
   // Manejar cambios en el formulario
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Manejar cambios en el formulario de lotes
+  const handleLoteInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setLoteFormData(prev => ({ ...prev, [name]: value }));
   };
 
   // Abrir modal para crear nuevo item
@@ -120,6 +184,41 @@ export default function Inventario() {
     setShowModal(true);
   };
 
+  // Abrir modal para ver y administrar lotes
+  const handleViewLotes = async (item: InventarioItem) => {
+    setSelectedItem(item);
+    setViewingLotes(true);
+    await loadLotes(item.id);
+  };
+
+  // Abrir modal para agregar nuevo lote
+  const handleAddLote = () => {
+    if (!selectedItem) return;
+    
+    setEditingLote(null);
+    setLoteFormData({
+      ...initialLoteFormData,
+      precioCompra: selectedItem.precioCompra.toString(),
+      proveedor: selectedItem.proveedor || '',
+    });
+    setShowLoteModal(true);
+  };
+
+  // Abrir modal para editar lote
+  const handleEditLote = (lote: Lote) => {
+    setEditingLote(lote);
+    setLoteFormData({
+      numeroLote: lote.numeroLote,
+      fechaCaducidad: lote.fechaCaducidad.split('T')[0], // Formato YYYY-MM-DD
+      cantidad: lote.cantidad.toString(),
+      precioCompra: lote.precioCompra?.toString() || '',
+      proveedor: lote.proveedor || '',
+      fechaRecepcion: lote.fechaRecepcion.split('T')[0],
+      observaciones: lote.observaciones || ''
+    });
+    setShowLoteModal(true);
+  };
+
   // Guardar item (crear o actualizar)
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -147,6 +246,38 @@ export default function Inventario() {
     }
   };
 
+  // Guardar lote (crear o actualizar)
+  const handleSaveLote = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedItem) return;
+    
+    try {
+      const url = editingLote 
+        ? `/api/inventario/lotes/${editingLote.id}` 
+        : `/api/inventario/${selectedItem.id}/lotes`;
+      const method = editingLote ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loteFormData)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error al guardar lote');
+      }
+
+      await loadLotes(selectedItem.id);
+      await loadInventario(); // Para actualizar el stock y fecha de caducidad
+      setShowLoteModal(false);
+      setLoteFormData(initialLoteFormData);
+      setEditingLote(null);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Error al guardar lote');
+    }
+  };
+
   // Eliminar item
   const handleDelete = async (id: string) => {
     if (!confirm('¿Estás seguro de que quieres eliminar este item?')) return;
@@ -157,6 +288,21 @@ export default function Inventario() {
       await loadInventario();
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Error al eliminar');
+    }
+  };
+
+  // Eliminar lote
+  const handleDeleteLote = async (loteId: string) => {
+    if (!confirm('¿Estás seguro de que quieres eliminar este lote?')) return;
+    if (!selectedItem) return;
+
+    try {
+      const response = await fetch(`/api/inventario/lotes/${loteId}`, { method: 'DELETE' });
+      if (!response.ok) throw new Error('Error al eliminar lote');
+      await loadLotes(selectedItem.id);
+      await loadInventario(); // Para actualizar el stock y fecha de caducidad
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Error al eliminar lote');
     }
   };
 
@@ -361,6 +507,12 @@ export default function Inventario() {
                     </span>
                   </td>
                   <td className="px-6 py-4 text-sm font-medium space-x-2">
+                    <button
+                      onClick={() => handleViewLotes(item)}
+                      className="bg-brand-accent-600 text-white px-3 py-1 rounded-md hover:bg-brand-accent-700 focus:outline-none focus:ring-2 focus:ring-brand-accent-500 mr-2"
+                    >
+                      📦 Lotes
+                    </button>
                     <button
                       onClick={() => handleEdit(item)}
                       className="text-brand-primary-600 hover:text-brand-primary-900"
@@ -579,6 +731,256 @@ export default function Inventario() {
                   className="px-4 py-2 bg-brand-primary-600 text-white rounded-lg hover:bg-brand-primary-700 focus:outline-none focus:ring-2 focus:ring-brand-primary-500"
                 >
                   {editingItem ? 'Actualizar' : 'Crear'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal para visualizar y administrar lotes */}
+      {viewingLotes && selectedItem && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto modal-content border border-brand-neutral-200">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-brand-neutral-900">
+                Lotes de {selectedItem.nombre}
+              </h2>
+              <button
+                onClick={() => {
+                  setViewingLotes(false);
+                  setSelectedItem(null);
+                  setLotes([]);
+                }}
+                className="text-brand-neutral-500 hover:text-brand-neutral-700"
+              >
+                ✕
+              </button>
+            </div>
+            
+            <div className="mb-4 flex justify-between items-center">
+              <div>
+                <p><span className="font-medium">Código:</span> {selectedItem.codigoBarras}</p>
+                <p><span className="font-medium">Stock total:</span> {selectedItem.stockActual} unidades</p>
+              </div>
+              <button
+                onClick={handleAddLote}
+                className="bg-brand-primary-600 text-white px-4 py-2 rounded-lg hover:bg-brand-primary-700 focus:outline-none focus:ring-2 focus:ring-brand-primary-500"
+              >
+                + Nuevo Lote
+              </button>
+            </div>
+            
+            {lotesLoading ? (
+              <div className="flex justify-center py-8">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-primary-600"></div>
+              </div>
+            ) : (
+              <>
+                {lotes.length === 0 ? (
+                  <div className="text-center py-8 text-brand-neutral-500">
+                    Este producto no tiene lotes registrados.
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-brand-neutral-200">
+                      <thead className="bg-brand-neutral-50">
+                        <tr>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-brand-neutral-500 uppercase tracking-wider">
+                            N° Lote
+                          </th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-brand-neutral-500 uppercase tracking-wider">
+                            F. Caducidad
+                          </th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-brand-neutral-500 uppercase tracking-wider">
+                            Cantidad
+                          </th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-brand-neutral-500 uppercase tracking-wider">
+                            F. Recepción
+                          </th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-brand-neutral-500 uppercase tracking-wider">
+                            Precio Compra
+                          </th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-brand-neutral-500 uppercase tracking-wider">
+                            Acciones
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-brand-neutral-200">
+                        {lotes.map((lote) => (
+                          <tr key={lote.id} className="hover:bg-brand-neutral-50">
+                            <td className="px-4 py-3 whitespace-nowrap">
+                              <div className="text-sm text-brand-neutral-900">{lote.numeroLote}</div>
+                            </td>
+                            <td className="px-4 py-3 whitespace-nowrap">
+                              <span className={`text-sm ${getCaducidadColor(lote.fechaCaducidad)}`}>
+                                {new Date(lote.fechaCaducidad).toLocaleDateString()}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3 whitespace-nowrap">
+                              <span className={`text-sm ${getStockColor(lote.cantidad)}`}>
+                                {lote.cantidad}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3 whitespace-nowrap">
+                              <div className="text-sm text-brand-neutral-900">
+                                {new Date(lote.fechaRecepcion).toLocaleDateString()}
+                              </div>
+                            </td>
+                            <td className="px-4 py-3 whitespace-nowrap">
+                              <div className="text-sm text-brand-neutral-900">
+                                ${lote.precioCompra?.toFixed(2) || selectedItem.precioCompra.toFixed(2)}
+                              </div>
+                            </td>
+                            <td className="px-4 py-3 whitespace-nowrap text-sm font-medium">
+                              <button
+                                onClick={() => handleEditLote(lote)}
+                                className="text-brand-primary-600 hover:text-brand-primary-900 mr-3"
+                              >
+                                Editar
+                              </button>
+                              <button
+                                onClick={() => handleDeleteLote(lote.id)}
+                                className="text-brand-error-600 hover:text-brand-error-900"
+                              >
+                                Eliminar
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      )}
+      
+      {/* Modal para crear/editar lote */}
+      {showLoteModal && selectedItem && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto modal-content border border-brand-neutral-200">
+            <h2 className="text-xl font-bold mb-4 text-brand-neutral-900">
+              {editingLote ? 'Editar Lote' : 'Nuevo Lote'}
+            </h2>
+            
+            <form onSubmit={handleSaveLote} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
+                    Número de Lote *
+                  </label>
+                  <input
+                    type="text"
+                    name="numeroLote"
+                    value={loteFormData.numeroLote}
+                    onChange={handleLoteInputChange}
+                    required
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
+                    Fecha de Caducidad *
+                  </label>
+                  <input
+                    type="date"
+                    name="fechaCaducidad"
+                    value={loteFormData.fechaCaducidad}
+                    onChange={handleLoteInputChange}
+                    required
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
+                    Cantidad *
+                  </label>
+                  <input
+                    type="number"
+                    name="cantidad"
+                    value={loteFormData.cantidad}
+                    onChange={handleLoteInputChange}
+                    min="0"
+                    required
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
+                    Precio de Compra
+                  </label>
+                  <input
+                    type="number"
+                    name="precioCompra"
+                    value={loteFormData.precioCompra}
+                    onChange={handleLoteInputChange}
+                    step="0.01"
+                    min="0"
+                    placeholder={selectedItem.precioCompra.toString()}
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
+                    Proveedor
+                  </label>
+                  <input
+                    type="text"
+                    name="proveedor"
+                    value={loteFormData.proveedor}
+                    onChange={handleLoteInputChange}
+                    placeholder={selectedItem.proveedor || ''}
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
+                    Fecha de Recepción
+                  </label>
+                  <input
+                    type="date"
+                    name="fechaRecepcion"
+                    value={loteFormData.fechaRecepcion}
+                    onChange={handleLoteInputChange}
+                    className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-brand-neutral-700 mb-1">
+                  Observaciones
+                </label>
+                <textarea
+                  name="observaciones"
+                  value={loteFormData.observaciones}
+                  onChange={handleLoteInputChange}
+                  rows={3}
+                  className="w-full px-3 py-2 border border-brand-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary-500 text-brand-neutral-900 bg-white"
+                />
+              </div>
+              
+              <div className="flex justify-end space-x-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowLoteModal(false)}
+                  className="px-4 py-2 text-brand-neutral-700 border border-brand-neutral-300 rounded-lg hover:bg-brand-neutral-50 focus:outline-none focus:ring-2 focus:ring-brand-primary-500"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-brand-primary-600 text-white rounded-lg hover:bg-brand-primary-700 focus:outline-none focus:ring-2 focus:ring-brand-primary-500"
+                >
+                  {editingLote ? 'Actualizar' : 'Crear'}
                 </button>
               </div>
             </form>
